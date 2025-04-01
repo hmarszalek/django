@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Route</title>
+    <link rel="stylesheet" href="{% static 'routes/styles.css' %}">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'user_routes' %}">Your Routes</a>
+        <a href="{% url 'logout' %}">Log Out</a>
+    </nav>
+
+    <div class="container">
+        <h2>Edit Route: {{ route.name }}</h2>
+
+        <h3>Route Points</h3>
+        <ul>
+            {% for point in points %}
+                <li>
+                    <span>({{ point.x }}, {{ point.y }})</span>
+                    <a href="{% url 'remove_point' route.id point.id %}">Remove</a>
+                </li>
+            {% empty %}
+                <p>No points have been added to this route. Add the first point!</p>
+            {% endfor %}
+        </ul>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="x">X Coordinate:</label>
+            <input type="number" name="x" required>
+
+            <label for="y">Y Coordinate:</label>
+            <input type="number" name="y" required>
+
+            <button type="submit">Add Point</button>
+        </form>
+
+        <p><a href="{% url 'user_routes' %}">Back to Your Routes</a></p>
+    </div>
+</body>
+</html>
