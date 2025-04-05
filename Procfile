@@ -1,1 +1,1 @@
-web: gunicorn ThinkSharp.wsgi
+web: gunicorn editor.wsgi
